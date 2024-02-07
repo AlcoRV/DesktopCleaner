@@ -1,6 +1,7 @@
-File DesktopCleaner/Properties/appsettings.json contains clean settings.
-It's better to use in TaskSheduller.
+## It's better to use in TaskSheduller.
+[Settings' file](DesktopCleaner/Properties/appsettings.json)
 
+```json
 Example:
 {
   "IgnoreFiles": {
@@ -10,5 +11,8 @@ Example:
       "Prefixes": [ "i" ], // Delete all files and folders, except ones with these prefixes (example filename: "isomename.txt").
       "Sources": [ "Games" ] // Delete all shortcuts, except ones with these folders in sources.
 }
+```
 
-P.s.: Don't delete "desktop.ini", "AutoLogger", "AV_block_remover" from settings.
+***P.s.: Don't delete `"desktop.ini"`, `"AutoLogger"`, `"AV_block_remover"` from settings.***
+
+
