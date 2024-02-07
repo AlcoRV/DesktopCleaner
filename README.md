@@ -1,8 +1,8 @@
 ## It's better to use in TaskSheduller.
 [Settings' file](DesktopCleaner/Properties/appsettings.json)
 
+### Example:
 ```json
-Example:
 {
   "IgnoreFiles": {
       "Files": [ "desktop.ini", "MSI Afterburner" ], // Delete all files, except these.
