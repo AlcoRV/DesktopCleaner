@@ -1,6 +1,9 @@
-﻿namespace DesktopCleaner.Properties.Settings;
+﻿namespace DesktopCleaner.Options;
 
-public class IgnoreItemsSettings
+/// <summary>
+///     Ignore settings for files and folders
+/// </summary>
+public class IgnoreItemsOptions
 {
     public const string Name = "IgnoreFiles";
 
