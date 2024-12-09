@@ -7,9 +7,9 @@ public class IgnoreItemsOptions
 {
     public const string Name = "IgnoreFiles";
 
-    public IEnumerable<string> Files { get; set; } = Array.Empty<string>();
-    public IEnumerable<string> Folders { get; set; } = Array.Empty<string>();
-    public IEnumerable<string> Extentions { get; set; } = Array.Empty<string>();
-    public IEnumerable<string> Prefixes { get; set; } = Array.Empty<string>();
-    public IEnumerable<string> Sources { get; set; } = Array.Empty<string>();
+    public IEnumerable<string> Files { get; set; } = [];
+    public IEnumerable<string> Folders { get; set; } = [];
+    public IEnumerable<string> Extentions { get; set; } = [];
+    public IEnumerable<string> Prefixes { get; set; } = [];
+    public IEnumerable<string> Sources { get; set; } = [];
 }
