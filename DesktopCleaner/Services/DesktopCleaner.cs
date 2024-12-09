@@ -2,17 +2,21 @@
 using DesktopCleaner.Options;
 using IWshRuntimeLibrary;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace DesktopCleaner.Services;
 
 public class DesktopCleaner: IDesktopCleaner
 {
     private readonly IgnoreItemsOptions _ignoreFilesOptions;
+    private readonly ILogger<DesktopCleaner> _logger;
 
-    public DesktopCleaner(IConfiguration configuration)
+    public DesktopCleaner(IConfiguration configuration, ILogger<DesktopCleaner> logger)
     {
         _ignoreFilesOptions = configuration.GetSection(IgnoreItemsOptions.Name).Get<IgnoreItemsOptions>()
             ?? new IgnoreItemsOptions();
+
+        _logger = logger;
     }
 
     public void Clean()
@@ -34,7 +38,13 @@ public class DesktopCleaner: IDesktopCleaner
             .Where(f => !_ignoreFilesOptions.Prefixes.Any(p => f.Name.StartsWith(p)))
             .ToList();
 
-        foldersToDeleting.ForEach(f => f.Delete(true));
+        _logger.LogDebug("Folders: {folders}", string.Join(", ", foldersToDeleting.Select(f => f.Name)));
+
+        foreach (var f in foldersToDeleting)
+        {
+            f.Delete(true);
+            _logger.LogInformation("{f} deleted", f.Name);
+        }
     }
 
     private void CleanFiles(IEnumerable<string> paths)
@@ -53,8 +63,14 @@ public class DesktopCleaner: IDesktopCleaner
             .Where(f => _ignoreFilesOptions.Sources.Any(s => (shell.CreateShortcut(f.FullName) as IWshShortcut)!.TargetPath.Contains(s, StringComparison.OrdinalIgnoreCase)))
             .ToList();
 
-        filesToDelete.Except(excessList)
-            .ToList()
-            .ForEach(f => f.Delete());
+        filesToDelete = filesToDelete.Except(excessList).ToList();
+
+        _logger.LogDebug("Files: {files}", string.Join(", ", filesToDelete.Select(f => f.Name)));
+
+        foreach (var f in filesToDelete)
+        {
+            f.Delete();
+            _logger.LogInformation("{f} deleted", f.Name);
+        }
     }
 }
